@@ -2,6 +2,7 @@
 import cv2
 
 faceCascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+eyeCascade = cv2.CascadeClassifier("haarcascade_eye_tree_eyeglasses.xml")
 
 def draw_boundary(img, classifier, scaleFactor, minNeighbors, color, text):
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -10,12 +11,15 @@ def draw_boundary(img, classifier, scaleFactor, minNeighbors, color, text):
     for (x, y, w, h) in features:
         cv2.rectangle(img, (x,y), (x+w, y+h), color, 2) #วาดสี่เหลี่ยมผืนผ้า เลย 2 คือความหน้าของเส้น
         cv2.putText(img, text, (x+10,y-10), cv2.FONT_HERSHEY_DUPLEX, 0.8, color, 1) #ใส่ข้อความลงไปในภาพตรงที่เราตรวจจับได้
-    return img
+        coords = [x,y,w,h]
+    return img, coords
 
 def detect(img, faceCascade): #เรียกใช้งาน draw_boundary
-    img = draw_boundary(img, faceCascade, 1.1, 10, (255,0,0), "It,s Me!")
+    img,coords = draw_boundary(img, faceCascade, 1.1, 10, (255,0,0), "It,s Me!")
+    img,coords = draw_boundary(img, eyeCascade, 1.1, 10, (255,0,255), "Eye")
     return img
 
+##############################################################################################
 cap = cv2.VideoCapture(0) #เปิดกล้อง เลข 0 คือค่า index ของกล้อง ถ้ามีตัวเดียวก็คือ ตัวที่ 0
 #ถ้าต้องการให้เปิด video ให้ทำการเปลี่ยนเลข 0 เป็นชื่อ video 
 while True: #loop เพื่อเปิดกล้องเรื่อยๆ
