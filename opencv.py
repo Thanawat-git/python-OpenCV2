@@ -2,7 +2,7 @@
 import cv2
 
 faceCascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
-eyeCascade = cv2.CascadeClassifier("haarcascade_eye_tree_eyeglasses.xml")
+#eyeCascade = cv2.CascadeClassifier("haarcascade_eye_tree_eyeglasses.xml")
 
 def draw_boundary(img, classifier, scaleFactor, minNeighbors, color, text):
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -16,7 +16,7 @@ def draw_boundary(img, classifier, scaleFactor, minNeighbors, color, text):
 
 def detect(img, faceCascade): #เรียกใช้งาน draw_boundary
     img,coords = draw_boundary(img, faceCascade, 1.1, 10, (255,0,0), "It,s Me!")
-    img,coords = draw_boundary(img, eyeCascade, 1.1, 10, (255,0,255), "Eye")
+    #img,coords = draw_boundary(img, eyeCascade, 1.1, 10, (255,0,255), "Eye")
     return img
 
 ##############################################################################################
